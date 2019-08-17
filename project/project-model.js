@@ -14,6 +14,10 @@ function findById(id) {
  return db('projects').where({ id });
 }
 
+async function add(info) {
+ const [id] = await db('projects').insert(info);
+ return db('projects').where({ id });
+}
 async function addTask(info, project_id) {
  console.log(info);
  const [id] = await db('tasks').insert({ ...info, project_id });
