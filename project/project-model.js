@@ -5,6 +5,7 @@ module.exports = {
  add,
  findById,
  addTask,
+ findAllTasks,
 };
 
 function find() {
@@ -30,4 +31,13 @@ async function addTask(info, project_id) {
  const [id] = await db('tasks').insert({ ...info, project_id });
  return findByIdTask(id);
 }
+
+function findAllTasks(id) {
+ return (
+  db('tasks as t')
+   .join('projects as p', 'project_id', 'p.id')
+   .select('p.*', 't.*')
+   //   .select('p.*', 'p.description', 't.description', 't.notes', 't.completed')
+   .where('project_id', id)
+ );
 }
