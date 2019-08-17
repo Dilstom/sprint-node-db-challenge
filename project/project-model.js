@@ -4,6 +4,7 @@ module.exports = {
  find,
  add,
  findById,
+ addTask,
 };
 
 function find() {
@@ -13,6 +14,9 @@ function findById(id) {
  return db('projects').where({ id });
 }
 
-function add(info) {
- return db('projects').insert(info);
+async function addTask(info, project_id) {
+ console.log(info);
+ const [id] = await db('tasks').insert({ ...info, project_id });
+ return findByIdTask(id);
+}
 }
